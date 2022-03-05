@@ -3,15 +3,15 @@
 SELECT 			parent.name parent, 
 				child.name child 
 FROM 			generalisation
-INNER JOIN 		entity parent ON parent.id = generalisation.parent
-INNER JOIN 		entity child ON child.id = generalisation.child;
+INNER JOIN 		entity parent ON parent.id = generalisation.id_parent
+INNER JOIN 		entity child ON child.id = generalisation.id_child;
 
--- shallow action entities display
+-- shallow verb entities display
 SELECT 			entity.name entity,
-				action.name action 
-FROM 			action_entities 
-INNER JOIN 		action ON action.id = action_entities.action
-INNER JOIN 		entity ON entity.id = action_entities.entity
+				verb.name verb 
+FROM 			verb_entities 
+INNER JOIN 		verb ON verb.id = verb_entities.id_verb
+INNER JOIN 		entity ON entity.id = verb_entities.id_entity
 ORDER BY 		entity.name;
 
 
@@ -20,14 +20,14 @@ ORDER BY 		entity.name;
 WITH generalisation AS (
 	WITH RECURSIVE gen AS 
 	(
-		SELECT 		generalisation.parent, 
-					generalisation.child 
+		SELECT 		generalisation.id_parent, 
+					generalisation.id_child 
 		FROM 		generalisation
 		UNION ALL
-		SELECT 		generalisation.parent, 
-					gen.child 
+		SELECT 		generalisation.id_parent, 
+					gen.id_child 
 		FROM 		gen
-		INNER JOIN 	generalisation ON gen.parent = generalisation.child 
+		INNER JOIN 	generalisation ON gen.id_parent = generalisation.id_child 
 	)
 	SELECT 	* 
 	FROM 	gen
@@ -35,40 +35,72 @@ WITH generalisation AS (
 SELECT 			parent.name parent, 
 				child.name child 
 FROM 			generalisation
-INNER JOIN 		entity parent ON parent.id = generalisation.parent
-INNER JOIN 		entity child ON child.id = generalisation.child
+INNER JOIN 		entity parent ON parent.id = generalisation.id_parent
+INNER JOIN 		entity child ON child.id = generalisation.id_child
 ORDER BY child;
 
--- actions applied to entities
+-- verbs applied to entities
 
-WITH action_entities AS
+WITH verb_entities AS
 (
 	WITH generalisation AS (
 		WITH RECURSIVE gen AS 
 		(
-			SELECT 		generalisation.parent, 
-						generalisation.child 
-			FROM 		generalisation
-			UNION ALL
-			SELECT 		generalisation.parent, 
-						gen.child 
-			FROM 		gen
-			INNER JOIN 	generalisation ON gen.parent = generalisation.child 
+		    SELECT 		generalisation.id_parent, 
+		                generalisation.id_child 
+		    FROM 		generalisation
+		    UNION ALL
+		    SELECT 		generalisation.id_parent, 
+		                gen.id_child 
+		    FROM 		gen
+		    INNER JOIN 	generalisation ON gen.id_parent = generalisation.id_child 
 		)
-		SELECT 	* 
-		FROM 	gen
+		SELECT      * 
+		FROM        gen
+		ORDER BY    id_child
 	)
-	SELECT 		action, 
-				child entity 
-	FROM 		action_entities
-	INNER JOIN 	generalisation ON generalisation.parent = action_entities.entity
+	SELECT       id_verb, 
+                id_child id_entity 
+    FROM        verb_entities
+	INNER JOIN  generalisation ON generalisation.id_parent = verb_entities.id_entity
 	UNION ALL 
-	SELECT 		* 
-	FROM 		action_entities
+	SELECT      * 
+    FROM        verb_entities
 )
 SELECT 			entity.name entity, 
-				action.name action
-FROM 			action_entities 
-INNER JOIN 		action ON action.id = action_entities.action
-INNER JOIN 		entity ON entity.id = action_entities.entity
+				verb.name verb
+FROM 			verb_entities 
+INNER JOIN 		verb ON verb.id = verb_entities.id_verb
+INNER JOIN 		entity ON entity.id = verb_entities.id_entity
 ORDER BY 		entity.name
+
+-- verb parameters
+
+WITH verb_parameters AS 
+(
+	WITH RECURSIVE gen AS 
+	(
+	    SELECT 			generalisation.id_parent, 
+	                	generalisation.id_child 
+	    FROM 			generalisation
+	    UNION ALL
+	    SELECT 			generalisation.id_parent, 
+	               	gen.id_child 
+	    FROM 			gen
+	    INNER JOIN 	generalisation ON gen.id_parent = generalisation.id_child 
+	)
+	SELECT 		verb_parameters.id_verb, 
+					verb_parameters.name, 
+					gen.id_child id_entity
+	FROM 			verb_parameters
+	INNER JOIN 	gen ON verb_parameters.id_entity = gen.id_parent
+	UNION ALL
+	SELECT 		verb_parameters.id_verb, 
+					verb_parameters.name, 
+					verb_parameters.id_entity
+	FROM 			verb_parameters
+)
+SELECT verb.name verb, entity.name entity, verb_parameters.name role FROM verb_parameters
+INNER JOIN verb ON verb_parameters.id_verb = verb.id
+INNER JOIN entity ON verb_parameters.id_entity = entity.id
+ORDER BY verb.name, verb_parameters.name

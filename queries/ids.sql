@@ -3,46 +3,78 @@
 
 WITH RECURSIVE gen AS 
 (
-    SELECT 		generalisation.parent, 
-                generalisation.child 
+    SELECT 		generalisation.id_parent, 
+                generalisation.id_child 
     FROM 		generalisation
     UNION ALL
-    SELECT 		generalisation.parent, 
-                gen.child 
+    SELECT 		generalisation.id_parent, 
+                gen.id_child 
     FROM 		gen
-    INNER JOIN 	generalisation ON gen.parent = generalisation.child 
+    INNER JOIN 	generalisation ON gen.id_parent = generalisation.id_child 
 )
 SELECT      * 
 FROM        gen
-ORDER BY    child;
+ORDER BY    id_child;
 
--- action entities applied to generalisation
+-- verb entities applied to generalisation
 
-WITH action_entities AS
+WITH verb_entities AS
 (
 	WITH generalisation AS (
 		WITH RECURSIVE gen AS 
-        (
-            SELECT 		generalisation.parent, 
-                        generalisation.child 
-            FROM 		generalisation
-            UNION ALL
-            SELECT 		generalisation.parent, 
-                        gen.child 
-            FROM 		gen
-            INNER JOIN 	generalisation ON gen.parent = generalisation.child 
-        )
-		SELECT  * 
-        FROM    gen
+		(
+		    SELECT 		generalisation.id_parent, 
+		                generalisation.id_child 
+		    FROM 		generalisation
+		    UNION ALL
+		    SELECT 		generalisation.id_parent, 
+		                gen.id_child 
+		    FROM 		gen
+		    INNER JOIN 	generalisation ON gen.id_parent = generalisation.id_child 
+		)
+		SELECT      * 
+		FROM        gen
+		ORDER BY    id_child
 	)
-	SELECT      action, 
-                child entity 
-    FROM        action_entities
-	INNER JOIN  generalisation ON generalisation.parent = action_entities.entity
+	SELECT       id_verb, 
+                id_child entity 
+    FROM        verb_entities
+	INNER JOIN  generalisation ON generalisation.id_parent = verb_entities.id_entity
 	UNION ALL 
 	SELECT      * 
-    FROM        action_entities
+    FROM        verb_entities
 )
 SELECT      * 
-FROM        action_entities 
-ORDER BY    action;
+FROM        verb_entities 
+ORDER BY    id_verb;
+
+
+-- verb parameters
+
+WITH verb_parameters AS 
+(
+	WITH RECURSIVE gen AS 
+	(
+	    SELECT 			generalisation.id_parent, 
+	                	generalisation.id_child 
+	    FROM 			generalisation
+	    UNION ALL
+	    SELECT 			generalisation.id_parent, 
+	               	gen.id_child 
+	    FROM 			gen
+	    INNER JOIN 	generalisation ON gen.id_parent = generalisation.id_child 
+	)
+	SELECT 		verb_parameters.id_verb, 
+					verb_parameters.name, 
+					gen.id_child id_entity
+	FROM 			verb_parameters
+	INNER JOIN 	gen ON verb_parameters.id_entity = gen.id_parent
+	UNION ALL
+	SELECT 		verb_parameters.id_verb, 
+					verb_parameters.name, 
+					verb_parameters.id_entity
+	FROM 			verb_parameters
+)
+SELECT      * 
+FROM        verb_parameters 
+ORDER BY    id_verb
