@@ -77,4 +77,6 @@ WITH verb_parameters AS
 )
 SELECT      * 
 FROM        verb_parameters 
-ORDER BY    id_verb
+ORDER BY    id_verb,
+			`name`,
+			id_entity
