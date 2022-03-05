@@ -8,10 +8,6 @@ INSERT INTO `action_entities` (`action`, `entity`) VALUES
 	(1, 8),
 	(3, 9);
 
-INSERT INTO `action_parameters` (`action`, `entity`, `name`) VALUES
-	(3, 6, 'origin'),
-	(3, 6, 'recipient');
-
 INSERT INTO `entity` (`id`, `name`) VALUES
 	(1, 'glass'),
 	(2, 'milk'),

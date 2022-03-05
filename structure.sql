@@ -12,15 +12,6 @@ CREATE TABLE IF NOT EXISTS `action_entities` (
   CONSTRAINT `FK__verb` FOREIGN KEY (`action`) REFERENCES `action` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_power_entity` FOREIGN KEY (`entity`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-CREATE TABLE IF NOT EXISTS `action_parameters` (
-  `action` int(11) DEFAULT NULL,
-  `entity` int(11) DEFAULT NULL,
-  `name` varchar(64) DEFAULT NULL,
-  KEY `FK_action_entity_action` (`action`),
-  KEY `FK_action_entity_entity` (`entity`),
-  CONSTRAINT `FK_action_entity_action` FOREIGN KEY (`action`) REFERENCES `action` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_action_entity_entity` FOREIGN KEY (`entity`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `entity` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
