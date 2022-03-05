@@ -36,16 +36,13 @@ WITH generalisation AS (
 	)
 	SELECT 	* 
 	FROM 	gen
-),
-text_gen AS
-(
-	SELECT 		parent.name parent, 
-					child.name child 
-	FROM 			generalisation
-	INNER JOIN 	entity parent ON parent.id = generalisation.parent
-	INNER JOIN 	entity child ON child.id = generalisation.child
 )
-SELECT child, parent FROM text_gen ORDER BY child;
+SELECT 		parent.name parent, 
+				child.name child 
+FROM 			generalisation
+INNER JOIN 	entity parent ON parent.id = generalisation.parent
+INNER JOIN 	entity child ON child.id = generalisation.child
+ORDER BY child;
 
 -- actions applied to entities
 
