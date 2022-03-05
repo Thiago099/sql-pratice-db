@@ -1,14 +1,12 @@
 INSERT INTO `action` (`id`, `name`) VALUES
 	(1, 'hold'),
 	(2, 'consume'),
-	(3, 'pour'),
-	(4, 'drag');
+	(3, 'pour');
 
 INSERT INTO `action_entities` (`action`, `entity`) VALUES
 	(2, 7),
 	(1, 8),
-	(3, 9),
-	(4, 8);
+	(3, 9);
 
 INSERT INTO `action_parameters` (`action`, `entity`, `name`) VALUES
 	(3, 6, 'origin'),
