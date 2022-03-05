@@ -46,7 +46,8 @@ WITH verb_entities AS
 )
 SELECT      * 
 FROM        verb_entities 
-ORDER BY    id_verb;
+ORDER BY    id_verb,
+			id_entity;
 
 
 -- verb parameters
