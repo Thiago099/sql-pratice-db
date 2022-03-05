@@ -1,10 +1,10 @@
 
--- shallow generalisation name
+-- shallow generalization name
 SELECT 			parent.name parent, 
 				child.name child 
-FROM 			generalisation
-INNER JOIN 		entity parent ON parent.id = generalisation.id_parent
-INNER JOIN 		entity child ON child.id = generalisation.id_child;
+FROM 			generalization
+INNER JOIN 		entity parent ON parent.id = generalization.id_parent
+INNER JOIN 		entity child ON child.id = generalization.id_child;
 
 -- shallow verb entities display
 SELECT 			entity.name entity,
@@ -15,45 +15,45 @@ INNER JOIN 		entity ON entity.id = verb_entities.id_entity
 ORDER BY 		entity.name;
 
 
--- generalisation expansion with name
+-- generalization expansion with name
 
-WITH generalisation AS (
+WITH generalization AS (
 	WITH RECURSIVE gen AS 
 	(
-		SELECT 		generalisation.id_parent, 
-					generalisation.id_child 
-		FROM 		generalisation
+		SELECT 		generalization.id_parent, 
+					generalization.id_child 
+		FROM 		generalization
 		UNION ALL
-		SELECT 		generalisation.id_parent, 
+		SELECT 		generalization.id_parent, 
 					gen.id_child 
 		FROM 		gen
-		INNER JOIN 	generalisation ON gen.id_parent = generalisation.id_child 
+		INNER JOIN 	generalization ON gen.id_parent = generalization.id_child 
 	)
 	SELECT 	* 
 	FROM 	gen
 )
 SELECT 			parent.name parent, 
 				child.name child 
-FROM 			generalisation
-INNER JOIN 		entity parent ON parent.id = generalisation.id_parent
-INNER JOIN 		entity child ON child.id = generalisation.id_child
+FROM 			generalization
+INNER JOIN 		entity parent ON parent.id = generalization.id_parent
+INNER JOIN 		entity child ON child.id = generalization.id_child
 ORDER BY child;
 
 -- verbs applied to entities
 
 WITH verb_entities AS
 (
-	WITH generalisation AS (
+	WITH generalization AS (
 		WITH RECURSIVE gen AS 
 		(
-		    SELECT 		generalisation.id_parent, 
-		                generalisation.id_child 
-		    FROM 		generalisation
+		    SELECT 		generalization.id_parent, 
+		                generalization.id_child 
+		    FROM 		generalization
 		    UNION ALL
-		    SELECT 		generalisation.id_parent, 
+		    SELECT 		generalization.id_parent, 
 		                gen.id_child 
 		    FROM 		gen
-		    INNER JOIN 	generalisation ON gen.id_parent = generalisation.id_child 
+		    INNER JOIN 	generalization ON gen.id_parent = generalization.id_child 
 		)
 		SELECT      * 
 		FROM        gen
@@ -62,7 +62,7 @@ WITH verb_entities AS
 	SELECT       id_verb, 
                 id_child id_entity 
     FROM        verb_entities
-	INNER JOIN  generalisation ON generalisation.id_parent = verb_entities.id_entity
+	INNER JOIN  generalization ON generalization.id_parent = verb_entities.id_entity
 	UNION ALL 
 	SELECT      * 
     FROM        verb_entities
@@ -80,14 +80,14 @@ WITH verb_parameters AS
 (
 	WITH RECURSIVE gen AS 
 	(
-	    SELECT 			generalisation.id_parent, 
-	                	generalisation.id_child 
-	    FROM 			generalisation
+	    SELECT 			generalization.id_parent, 
+	                	generalization.id_child 
+	    FROM 			generalization
 	    UNION ALL
-	    SELECT 			generalisation.id_parent, 
+	    SELECT 			generalization.id_parent, 
 	               	gen.id_child 
 	    FROM 			gen
-	    INNER JOIN 	generalisation ON gen.id_parent = generalisation.id_child 
+	    INNER JOIN 	generalization ON gen.id_parent = generalization.id_child 
 	)
 	SELECT 		verb_parameters.id_verb, 
 					verb_parameters.name, 

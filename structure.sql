@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `verb` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS `generalisation` (
+CREATE TABLE IF NOT EXISTS `generalization` (
   `id_parent` int(11) DEFAULT NULL,
   `id_child` int(11) DEFAULT NULL,
   KEY `FK__entity` (`id_parent`) USING BTREE,

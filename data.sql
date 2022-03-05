@@ -15,7 +15,7 @@ INSERT INTO `verb` (`id`, `name`) VALUES
 	(4, 'drink out of'),
 	(5, 'contain fluid');
 
-INSERT INTO `generalisation` (`id_parent`, `id_child`) VALUES
+INSERT INTO `generalization` (`id_parent`, `id_child`) VALUES
 	(6, 1),
 	(9, 2),
 	(8, 6),
