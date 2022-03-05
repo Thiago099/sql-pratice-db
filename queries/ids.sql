@@ -18,6 +18,7 @@ ORDER BY    id_child;
 
 -- verb entities applied to generalization
 
+
 WITH verb_entities AS
 (
 	WITH generalization AS (
