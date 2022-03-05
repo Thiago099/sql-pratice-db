@@ -17,7 +17,8 @@ SELECT 		action.name action,
 				) parameters
 FROM 			action_entities 
 INNER JOIN 	action ON action.id = action_entities.action
-INNER JOIN 	entity ON entity.id = action_entities.entity;
+INNER JOIN 	entity ON entity.id = action_entities.entity
+ORDER BY 	entity.name;
 
 
 -- generalisation expansion with name
@@ -71,8 +72,9 @@ WITH action_entities AS
 	SELECT 		* 
 	FROM 		action_entities
 )
-SELECT 			action.name action, 
-				entity.name entity
+SELECT 		entity.name entity, 
+				action.name action
 FROM 			action_entities 
 INNER JOIN 	action ON action.id = action_entities.action
-INNER JOIN 	entity ON entity.id = action_entities.entity;
+INNER JOIN 	entity ON entity.id = action_entities.entity
+ORDER BY 	entity.name
