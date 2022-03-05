@@ -16,9 +16,9 @@ SELECT 		action.name action,
 					WHERE 		action_parameters.action = action.id
 				) parameters
 FROM 			action_entities 
-INNER JOIN 	action ON action.id = action_entities.action
-INNER JOIN 	entity ON entity.id = action_entities.entity
-ORDER BY 	entity.name;
+INNER JOIN 		action ON action.id = action_entities.action
+INNER JOIN 		entity ON entity.id = action_entities.entity
+ORDER BY 		entity.name;
 
 
 -- generalisation expansion with name
@@ -38,11 +38,11 @@ WITH generalisation AS (
 	SELECT 	* 
 	FROM 	gen
 )
-SELECT 		parent.name parent, 
+SELECT 			parent.name parent, 
 				child.name child 
 FROM 			generalisation
-INNER JOIN 	entity parent ON parent.id = generalisation.parent
-INNER JOIN 	entity child ON child.id = generalisation.child
+INNER JOIN 		entity parent ON parent.id = generalisation.parent
+INNER JOIN 		entity child ON child.id = generalisation.child
 ORDER BY child;
 
 -- actions applied to entities
@@ -72,9 +72,9 @@ WITH action_entities AS
 	SELECT 		* 
 	FROM 		action_entities
 )
-SELECT 		entity.name entity, 
+SELECT 			entity.name entity, 
 				action.name action
 FROM 			action_entities 
-INNER JOIN 	action ON action.id = action_entities.action
-INNER JOIN 	entity ON entity.id = action_entities.entity
-ORDER BY 	entity.name
+INNER JOIN 		action ON action.id = action_entities.action
+INNER JOIN 		entity ON entity.id = action_entities.entity
+ORDER BY 		entity.name
