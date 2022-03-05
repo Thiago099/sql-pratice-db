@@ -7,8 +7,8 @@ INNER JOIN 		entity parent ON parent.id = generalisation.parent
 INNER JOIN 		entity child ON child.id = generalisation.child;
 
 -- shallow action entities display
-SELECT 			action.name action, 
-				entity.name entity
+SELECT 			entity.name entity,
+				action.name action 
 FROM 			action_entities 
 INNER JOIN 		action ON action.id = action_entities.action
 INNER JOIN 		entity ON entity.id = action_entities.entity
