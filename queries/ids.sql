@@ -37,7 +37,7 @@ WITH verb_entities AS
 		ORDER BY    id_child
 	)
 	SELECT       id_verb, 
-                id_child entity 
+                id_child id_entity 
     FROM        verb_entities
 	INNER JOIN  generalization ON generalization.id_parent = verb_entities.id_entity
 	UNION ALL 
