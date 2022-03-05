@@ -100,7 +100,12 @@ WITH verb_parameters AS
 					verb_parameters.id_entity
 	FROM 			verb_parameters
 )
-SELECT verb.name verb, entity.name entity, verb_parameters.name role FROM verb_parameters
-INNER JOIN verb ON verb_parameters.id_verb = verb.id
-INNER JOIN entity ON verb_parameters.id_entity = entity.id
-ORDER BY verb.name, verb_parameters.name
+SELECT 		verb.name verb, 
+			entity.name entity, 
+			verb_parameters.name role 
+FROM 		verb_parameters
+INNER JOIN 	verb ON verb_parameters.id_verb = verb.id
+INNER JOIN 	entity ON verb_parameters.id_entity = entity.id
+ORDER BY 	verb.name, 
+			verb_parameters.name, 
+			entity.name
