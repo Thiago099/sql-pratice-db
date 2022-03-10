@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
--- Versão do servidor:           10.4.21-MariaDB - mariadb.org binary distribution
+-- Versão do servidor:           10.4.22-MariaDB - mariadb.org binary distribution
 -- OS do Servidor:               Win64
 -- HeidiSQL Versão:              11.3.0.6295
 -- --------------------------------------------------------
@@ -12,8 +12,13 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+-- Copiando estrutura do banco de dados para main
+DROP DATABASE IF EXISTS `main`;
+CREATE DATABASE IF NOT EXISTS `main` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `main`;
+
 -- Copiando estrutura para tabela main.action
-DROP TABLE IF EXISTS `action`;
 CREATE TABLE IF NOT EXISTS `action` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_verb` int(11) NOT NULL DEFAULT 0,
@@ -25,14 +30,13 @@ CREATE TABLE IF NOT EXISTS `action` (
   CONSTRAINT `FK_action_verb` FOREIGN KEY (`id_verb`) REFERENCES `verb` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela main.action: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela main.action: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `action` DISABLE KEYS */;
 INSERT INTO `action` (`id`, `id_verb`, `id_entity`) VALUES
 	(1, 5, 1);
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.action_parameter
-DROP TABLE IF EXISTS `action_parameter`;
 CREATE TABLE IF NOT EXISTS `action_parameter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_action` int(11) DEFAULT NULL,
@@ -47,14 +51,13 @@ CREATE TABLE IF NOT EXISTS `action_parameter` (
   CONSTRAINT `FK_action_parameter_verb_parameters` FOREIGN KEY (`id_verb_parameter`) REFERENCES `verb_parameters` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela main.action_parameter: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela main.action_parameter: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `action_parameter` DISABLE KEYS */;
 INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
 	(1, 1, 2, 4);
 /*!40000 ALTER TABLE `action_parameter` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.entity
-DROP TABLE IF EXISTS `entity`;
 CREATE TABLE IF NOT EXISTS `entity` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL DEFAULT '0',
@@ -67,23 +70,16 @@ CREATE TABLE IF NOT EXISTS `entity` (
 -- Copiando dados para a tabela main.entity: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `entity` DISABLE KEYS */;
 INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
-	(1, 'glass', 2);
-INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
-	(2, 'milk', 2);
-INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
-	(6, 'container', 1);
-INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
-	(7, 'food', 3);
-INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
-	(8, 'solid', 1);
-INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
-	(9, 'fluid', 1);
-INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
+	(1, 'glass', 2),
+	(2, 'milk', 2),
+	(6, 'container', 1),
+	(7, 'food', 3),
+	(8, 'solid', 1),
+	(9, 'fluid', 1),
 	(10, 'jug', 2);
 /*!40000 ALTER TABLE `entity` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.generalization
-DROP TABLE IF EXISTS `generalization`;
 CREATE TABLE IF NOT EXISTS `generalization` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_parent` int(11) DEFAULT NULL,
@@ -98,59 +94,49 @@ CREATE TABLE IF NOT EXISTS `generalization` (
 -- Copiando dados para a tabela main.generalization: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `generalization` DISABLE KEYS */;
 INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(7, 6, 1);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(8, 9, 2);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(9, 8, 6);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(10, 7, 2);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
+	(7, 6, 1),
+	(8, 9, 2),
+	(9, 8, 6),
+	(10, 7, 2),
 	(11, 6, 10);
 /*!40000 ALTER TABLE `generalization` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.group
-DROP TABLE IF EXISTS `group`;
 CREATE TABLE IF NOT EXISTS `group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- Copiando dados para a tabela main.group: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `group` DISABLE KEYS */;
 INSERT INTO `group` (`id`, `name`) VALUES
-	(1, 'generic spatial');
-INSERT INTO `group` (`id`, `name`) VALUES
-	(2, 'instance');
-INSERT INTO `group` (`id`, `name`) VALUES
-	(3, 'generic creature');
+	(1, 'phisical'),
+	(2, 'instance'),
+	(3, 'creature');
 /*!40000 ALTER TABLE `group` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.verb
-DROP TABLE IF EXISTS `verb`;
 CREATE TABLE IF NOT EXISTS `verb` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `id_group` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_verb_group` (`id_group`),
+  CONSTRAINT `FK_verb_group` FOREIGN KEY (`id_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela main.verb: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `verb` DISABLE KEYS */;
-INSERT INTO `verb` (`id`, `name`) VALUES
-	(1, 'be held');
-INSERT INTO `verb` (`id`, `name`) VALUES
-	(2, 'be consumed');
-INSERT INTO `verb` (`id`, `name`) VALUES
-	(3, 'be poured');
-INSERT INTO `verb` (`id`, `name`) VALUES
-	(4, 'drink out of');
-INSERT INTO `verb` (`id`, `name`) VALUES
-	(5, 'contain fluid');
+INSERT INTO `verb` (`id`, `name`, `id_group`) VALUES
+	(1, 'be held', 1),
+	(2, 'be consumed', 3),
+	(3, 'be poured', 1),
+	(4, 'drink out of', 3),
+	(5, 'contain fluid', 1);
 /*!40000 ALTER TABLE `verb` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.verb_entities
-DROP TABLE IF EXISTS `verb_entities`;
 CREATE TABLE IF NOT EXISTS `verb_entities` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_verb` int(11) DEFAULT NULL,
@@ -165,19 +151,25 @@ CREATE TABLE IF NOT EXISTS `verb_entities` (
 -- Copiando dados para a tabela main.verb_entities: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `verb_entities` DISABLE KEYS */;
 INSERT INTO `verb_entities` (`id`, `id_verb`, `id_entity`) VALUES
-	(6, 2, 7);
-INSERT INTO `verb_entities` (`id`, `id_verb`, `id_entity`) VALUES
-	(7, 1, 8);
-INSERT INTO `verb_entities` (`id`, `id_verb`, `id_entity`) VALUES
-	(8, 3, 9);
-INSERT INTO `verb_entities` (`id`, `id_verb`, `id_entity`) VALUES
-	(9, 4, 6);
-INSERT INTO `verb_entities` (`id`, `id_verb`, `id_entity`) VALUES
+	(6, 2, 7),
+	(7, 1, 8),
+	(8, 3, 9),
+	(9, 4, 6),
 	(10, 5, 6);
 /*!40000 ALTER TABLE `verb_entities` ENABLE KEYS */;
 
+-- Copiando estrutura para tabela main.verb_group
+CREATE TABLE IF NOT EXISTS `verb_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Copiando dados para a tabela main.verb_group: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `verb_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `verb_group` ENABLE KEYS */;
+
 -- Copiando estrutura para tabela main.verb_parameters
-DROP TABLE IF EXISTS `verb_parameters`;
 CREATE TABLE IF NOT EXISTS `verb_parameters` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_verb` int(11) DEFAULT NULL,
@@ -193,10 +185,8 @@ CREATE TABLE IF NOT EXISTS `verb_parameters` (
 -- Copiando dados para a tabela main.verb_parameters: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `verb_parameters` DISABLE KEYS */;
 INSERT INTO `verb_parameters` (`id`, `id_verb`, `id_entity`, `name`) VALUES
-	(4, 5, 9, 'fluid');
-INSERT INTO `verb_parameters` (`id`, `id_verb`, `id_entity`, `name`) VALUES
-	(5, 3, 6, 'origin');
-INSERT INTO `verb_parameters` (`id`, `id_verb`, `id_entity`, `name`) VALUES
+	(4, 5, 9, 'fluid'),
+	(5, 3, 6, 'origin'),
 	(6, 3, 6, 'recipient');
 /*!40000 ALTER TABLE `verb_parameters` ENABLE KEYS */;
 
