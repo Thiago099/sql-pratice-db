@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
--- Versão do servidor:           10.4.22-MariaDB - mariadb.org binary distribution
+-- Versão do servidor:           10.4.21-MariaDB - mariadb.org binary distribution
 -- OS do Servidor:               Win64
 -- HeidiSQL Versão:              11.3.0.6295
 -- --------------------------------------------------------
@@ -21,19 +21,33 @@ USE `main`;
 -- Copiando estrutura para tabela main.action
 CREATE TABLE IF NOT EXISTS `action` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_verb` int(11) NOT NULL DEFAULT 0,
-  `id_entity` int(11) NOT NULL DEFAULT 0,
+  `id_verb` int(11) DEFAULT 0,
+  `id_entity` int(11) DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `FK_action_verb` (`id_verb`),
   KEY `FK_action_entity` (`id_entity`),
   CONSTRAINT `FK_action_entity` FOREIGN KEY (`id_entity`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_action_verb` FOREIGN KEY (`id_verb`) REFERENCES `verb` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela main.action: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela main.action: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `action` DISABLE KEYS */;
 INSERT INTO `action` (`id`, `id_verb`, `id_entity`) VALUES
-	(1, 5, 1);
+	(47, 13, 1);
+INSERT INTO `action` (`id`, `id_verb`, `id_entity`) VALUES
+	(48, 13, 10);
+INSERT INTO `action` (`id`, `id_verb`, `id_entity`) VALUES
+	(49, 13, 2);
+INSERT INTO `action` (`id`, `id_verb`, `id_entity`) VALUES
+	(50, 3, 1);
+INSERT INTO `action` (`id`, `id_verb`, `id_entity`) VALUES
+	(51, 3, 2);
+INSERT INTO `action` (`id`, `id_verb`, `id_entity`) VALUES
+	(56, 3, 10);
+INSERT INTO `action` (`id`, `id_verb`, `id_entity`) VALUES
+	(57, 2, 2);
+INSERT INTO `action` (`id`, `id_verb`, `id_entity`) VALUES
+	(58, 3, 1);
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.action_parameter
@@ -48,35 +62,73 @@ CREATE TABLE IF NOT EXISTS `action_parameter` (
   KEY `FK_action_parameter_verb_parameters` (`id_verb_parameter`),
   CONSTRAINT `FK_action_parameter_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_action_parameter_entity` FOREIGN KEY (`id_entity`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_action_parameter_verb_parameters` FOREIGN KEY (`id_verb_parameter`) REFERENCES `verb_parameters` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+  CONSTRAINT `FK_action_parameter_verb_parameters` FOREIGN KEY (`id_verb_parameter`) REFERENCES `verb_parameter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela main.action_parameter: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela main.action_parameter: ~12 rows (aproximadamente)
 /*!40000 ALTER TABLE `action_parameter` DISABLE KEYS */;
 INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
-	(1, 1, 2, 4);
+	(57, 47, 20, 11);
+INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
+	(58, 48, 17, 11);
+INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
+	(59, 49, 10, 11);
+INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
+	(60, 50, 19, 6);
+INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
+	(61, 50, 20, 5);
+INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
+	(62, 51, 10, 5);
+INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
+	(63, 51, 1, 6);
+INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
+	(70, 56, 19, 11);
+INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
+	(71, 56, 19, 5);
+INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
+	(72, 56, 17, 6);
+INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
+	(74, 58, 19, 5);
+INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
+	(75, 58, 21, 6);
 /*!40000 ALTER TABLE `action_parameter` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.entity
 CREATE TABLE IF NOT EXISTS `entity` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL DEFAULT '0',
+  `name` varchar(64) DEFAULT '0',
   `id_group` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_entity_group` (`id_group`),
   CONSTRAINT `FK_entity_group` FOREIGN KEY (`id_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela main.entity: ~7 rows (aproximadamente)
+-- Copiando dados para a tabela main.entity: ~12 rows (aproximadamente)
 /*!40000 ALTER TABLE `entity` DISABLE KEYS */;
 INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
-	(1, 'glass', 2),
-	(2, 'milk', 2),
-	(6, 'container', 1),
-	(7, 'food', 3),
-	(8, 'solid', 1),
-	(9, 'fluid', 1),
+	(1, 'glass', 2);
+INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
+	(2, 'milk', 2);
+INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
+	(7, 'food', 3);
+INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
+	(9, 'fluid', 1);
+INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
 	(10, 'jug', 2);
+INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
+	(15, 'solid', 1);
+INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
+	(16, 'object', 1);
+INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
+	(17, 'fridge', 2);
+INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
+	(18, 'table', 2);
+INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
+	(19, 'context', 3);
+INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
+	(20, 'drawer', 2);
+INSERT INTO `entity` (`id`, `name`, `id_group`) VALUES
+	(21, 'sink', 2);
 /*!40000 ALTER TABLE `entity` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.generalization
@@ -89,55 +141,73 @@ CREATE TABLE IF NOT EXISTS `generalization` (
   KEY `FK__entity_2` (`id_child`) USING BTREE,
   CONSTRAINT `FK__entity` FOREIGN KEY (`id_parent`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK__entity_2` FOREIGN KEY (`id_child`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela main.generalization: ~5 rows (aproximadamente)
+-- Copiando dados para a tabela main.generalization: ~11 rows (aproximadamente)
 /*!40000 ALTER TABLE `generalization` DISABLE KEYS */;
 INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(7, 6, 1),
-	(8, 9, 2),
-	(9, 8, 6),
-	(10, 7, 2),
-	(11, 6, 10);
+	(10, 7, 2);
+INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
+	(16, 16, 15);
+INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
+	(18, 16, 9);
+INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
+	(19, 15, 17);
+INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
+	(20, 15, 18);
+INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
+	(21, 15, 19);
+INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
+	(22, 15, 20);
+INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
+	(23, 15, 21);
+INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
+	(24, 15, 10);
+INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
+	(25, 15, 1);
+INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
+	(26, 9, 2);
 /*!40000 ALTER TABLE `generalization` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.group
 CREATE TABLE IF NOT EXISTS `group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL DEFAULT '0',
+  `name` varchar(64) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 -- Copiando dados para a tabela main.group: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `group` DISABLE KEYS */;
 INSERT INTO `group` (`id`, `name`) VALUES
-	(1, 'phisical'),
-	(2, 'instance'),
-	(3, 'creature');
+	(1, 'phisical');
+INSERT INTO `group` (`id`, `name`) VALUES
+	(2, 'instance');
+INSERT INTO `group` (`id`, `name`) VALUES
+	(3, 'basic');
 /*!40000 ALTER TABLE `group` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.verb
 CREATE TABLE IF NOT EXISTS `verb` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL DEFAULT '0',
+  `name` varchar(64) DEFAULT '0',
   `id_group` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_verb_group` (`id_group`),
   CONSTRAINT `FK_verb_group` FOREIGN KEY (`id_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela main.verb: ~5 rows (aproximadamente)
+-- Copiando dados para a tabela main.verb: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `verb` DISABLE KEYS */;
 INSERT INTO `verb` (`id`, `name`, `id_group`) VALUES
-	(1, 'be held', 1),
-	(2, 'be consumed', 3),
-	(3, 'be poured', 1),
-	(4, 'drink out of', 3),
-	(5, 'contain fluid', 1);
+	(2, 'consumed', 3);
+INSERT INTO `verb` (`id`, `name`, `id_group`) VALUES
+	(3, 'moved', 1);
+INSERT INTO `verb` (`id`, `name`, `id_group`) VALUES
+	(13, 'contained', 1);
 /*!40000 ALTER TABLE `verb` ENABLE KEYS */;
 
--- Copiando estrutura para tabela main.verb_entities
-CREATE TABLE IF NOT EXISTS `verb_entities` (
+-- Copiando estrutura para tabela main.verb_entity
+CREATE TABLE IF NOT EXISTS `verb_entity` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_verb` int(11) DEFAULT NULL,
   `id_entity` int(11) DEFAULT NULL,
@@ -146,22 +216,22 @@ CREATE TABLE IF NOT EXISTS `verb_entities` (
   KEY `FK__verb` (`id_verb`) USING BTREE,
   CONSTRAINT `FK__verb` FOREIGN KEY (`id_verb`) REFERENCES `verb` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_power_entity` FOREIGN KEY (`id_entity`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela main.verb_entities: ~5 rows (aproximadamente)
-/*!40000 ALTER TABLE `verb_entities` DISABLE KEYS */;
-INSERT INTO `verb_entities` (`id`, `id_verb`, `id_entity`) VALUES
-	(6, 2, 7),
-	(7, 1, 8),
-	(8, 3, 9),
-	(9, 4, 6),
-	(10, 5, 6);
-/*!40000 ALTER TABLE `verb_entities` ENABLE KEYS */;
+-- Copiando dados para a tabela main.verb_entity: ~3 rows (aproximadamente)
+/*!40000 ALTER TABLE `verb_entity` DISABLE KEYS */;
+INSERT INTO `verb_entity` (`id`, `id_verb`, `id_entity`) VALUES
+	(6, 2, 7);
+INSERT INTO `verb_entity` (`id`, `id_verb`, `id_entity`) VALUES
+	(8, 3, 16);
+INSERT INTO `verb_entity` (`id`, `id_verb`, `id_entity`) VALUES
+	(19, 13, 16);
+/*!40000 ALTER TABLE `verb_entity` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.verb_group
 CREATE TABLE IF NOT EXISTS `verb_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL DEFAULT '0',
+  `name` varchar(64) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -169,8 +239,8 @@ CREATE TABLE IF NOT EXISTS `verb_group` (
 /*!40000 ALTER TABLE `verb_group` DISABLE KEYS */;
 /*!40000 ALTER TABLE `verb_group` ENABLE KEYS */;
 
--- Copiando estrutura para tabela main.verb_parameters
-CREATE TABLE IF NOT EXISTS `verb_parameters` (
+-- Copiando estrutura para tabela main.verb_parameter
+CREATE TABLE IF NOT EXISTS `verb_parameter` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_verb` int(11) DEFAULT NULL,
   `id_entity` int(11) DEFAULT NULL,
@@ -180,15 +250,17 @@ CREATE TABLE IF NOT EXISTS `verb_parameters` (
   KEY `FK_verb_parameters_entity` (`id_entity`) USING BTREE,
   CONSTRAINT `FK_verb_parameters_entity` FOREIGN KEY (`id_entity`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_verb_parameters_verb` FOREIGN KEY (`id_verb`) REFERENCES `verb` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela main.verb_parameters: ~3 rows (aproximadamente)
-/*!40000 ALTER TABLE `verb_parameters` DISABLE KEYS */;
-INSERT INTO `verb_parameters` (`id`, `id_verb`, `id_entity`, `name`) VALUES
-	(4, 5, 9, 'fluid'),
-	(5, 3, 6, 'origin'),
-	(6, 3, 6, 'recipient');
-/*!40000 ALTER TABLE `verb_parameters` ENABLE KEYS */;
+-- Copiando dados para a tabela main.verb_parameter: ~3 rows (aproximadamente)
+/*!40000 ALTER TABLE `verb_parameter` DISABLE KEYS */;
+INSERT INTO `verb_parameter` (`id`, `id_verb`, `id_entity`, `name`) VALUES
+	(5, 3, 15, 'origin');
+INSERT INTO `verb_parameter` (`id`, `id_verb`, `id_entity`, `name`) VALUES
+	(6, 3, 15, 'destination');
+INSERT INTO `verb_parameter` (`id`, `id_verb`, `id_entity`, `name`) VALUES
+	(11, 13, 15, 'container');
+/*!40000 ALTER TABLE `verb_parameter` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
