@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `group` (
 -- Copiando dados para a tabela main.group: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `group` DISABLE KEYS */;
 INSERT INTO `group` (`id`, `name`) VALUES
-	(27, 'baisc');
+	(27, 'baisic');
 /*!40000 ALTER TABLE `group` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.process
