@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
--- Versão do servidor:           10.4.21-MariaDB - mariadb.org binary distribution
+-- Versão do servidor:           10.4.22-MariaDB - mariadb.org binary distribution
 -- OS do Servidor:               Win64
 -- HeidiSQL Versão:              11.3.0.6295
 -- --------------------------------------------------------
@@ -31,16 +31,15 @@ CREATE TABLE IF NOT EXISTS `action` (
   CONSTRAINT `FK_action_entity` FOREIGN KEY (`id_entity`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_action_process` FOREIGN KEY (`id_process`) REFERENCES `process` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_action_verb` FOREIGN KEY (`id_verb`) REFERENCES `verb` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=88 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4;
 
 -- Copiando dados para a tabela main.action: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `action` DISABLE KEYS */;
 INSERT INTO `action` (`id`, `id_verb`, `id_entity`, `id_process`) VALUES
-	(84, 55, 177, 8);
-INSERT INTO `action` (`id`, `id_verb`, `id_entity`, `id_process`) VALUES
-	(85, 53, 136, 8);
-INSERT INTO `action` (`id`, `id_verb`, `id_entity`, `id_process`) VALUES
-	(87, NULL, NULL, 9);
+	(84, 55, 177, 8),
+	(85, 53, 178, 8),
+	(87, NULL, NULL, 9),
+	(88, 54, 179, 8);
 /*!40000 ALTER TABLE `action` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.action_parameter
@@ -56,18 +55,16 @@ CREATE TABLE IF NOT EXISTS `action_parameter` (
   CONSTRAINT `FK_action_parameter_action` FOREIGN KEY (`id_action`) REFERENCES `action` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_action_parameter_entity` FOREIGN KEY (`id_entity`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_action_parameter_verb_parameters` FOREIGN KEY (`id_verb_parameter`) REFERENCES `verb_parameter` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb4;
 
 -- Copiando dados para a tabela main.action_parameter: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `action_parameter` DISABLE KEYS */;
 INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
-	(106, 84, 176, 64);
-INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
-	(107, 84, 158, 65);
-INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
-	(108, 84, 148, 63);
-INSERT INTO `action_parameter` (`id`, `id_action`, `id_entity`, `id_verb_parameter`) VALUES
-	(112, 85, 177, 59);
+	(106, 84, 158, 64),
+	(107, 84, 176, 65),
+	(108, 84, 148, 63),
+	(112, 85, 177, 59),
+	(114, 88, 178, 60);
 /*!40000 ALTER TABLE `action_parameter` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.entity
@@ -82,68 +79,43 @@ CREATE TABLE IF NOT EXISTS `entity` (
   KEY `FK_entity_process` (`id_process`),
   CONSTRAINT `FK_entity_group` FOREIGN KEY (`id_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_entity_process` FOREIGN KEY (`id_process`) REFERENCES `process` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=180 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela main.entity: ~27 rows (aproximadamente)
+-- Copiando dados para a tabela main.entity: ~31 rows (aproximadamente)
 /*!40000 ALTER TABLE `entity` DISABLE KEYS */;
 INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(127, 'parameter container', 27, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(128, 'expression', 27, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(129, 'block container', 27, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(130, 'block item', 27, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(131, 'operator', 27, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(133, 'parameter and block container', 27, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(136, 'if', 30, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(137, 'for', 30, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(138, 'foreach', 30, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(139, 'while', 30, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(142, 'array', 31, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(143, 'object', 31, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(144, 'boolean', 31, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(145, 'number', 31, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(146, 'string', 31, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(147, 'function', 31, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(148, 'sum', 32, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(149, 'subtract', 32, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(150, 'multiply', 32, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(151, 'divide', 32, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(152, 'equal', 32, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(153, 'diferent', 32, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(154, 'not', 32, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(155, 'and', 32, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
+	(127, 'parameter container', 27, 0, NULL),
+	(128, 'expression', 27, 0, NULL),
+	(129, 'block container', 27, 0, NULL),
+	(130, 'block item', 27, 0, NULL),
+	(131, 'operator', 27, 0, NULL),
+	(133, 'parameter and block container', 27, 0, NULL),
+	(136, 'if', 30, 0, NULL),
+	(137, 'for', 30, 0, NULL),
+	(138, 'foreach', 30, 0, NULL),
+	(139, 'while', 30, 0, NULL),
+	(142, 'array', 31, 0, NULL),
+	(143, 'object', 31, 0, NULL),
+	(144, 'boolean', 31, 0, NULL),
+	(145, 'number', 31, 0, NULL),
+	(146, 'string', 31, 0, NULL),
+	(147, 'function', 31, 0, NULL),
+	(148, 'sum', 32, 0, NULL),
+	(149, 'subtract', 32, 0, NULL),
+	(150, 'multiply', 32, 0, NULL),
+	(151, 'divide', 32, 0, NULL),
+	(152, 'equal', 32, 0, NULL),
+	(153, 'diferent', 32, 0, NULL),
+	(154, 'not', 32, 0, NULL),
+	(155, 'and', 32, 0, NULL),
 	(156, 'or', 32, 0, NULL);
 INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(157, 'concat', 32, 0, NULL);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(158, 'A', 31, 1, 8);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(176, 'B', 31, 1, 8);
-INSERT INTO `entity` (`id`, `name`, `id_group`, `instance`, `id_process`) VALUES
-	(177, 'C', 31, 1, 8);
+	(157, 'concat', 32, 0, NULL),
+	(158, 'A', 31, 1, 8),
+	(176, 'B', 31, 1, 8),
+	(177, 'C', 31, 1, 8),
+	(178, 'A', 30, 1, 8),
+	(179, 'B', 30, 1, 8);
 /*!40000 ALTER TABLE `entity` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.generalization
@@ -156,64 +128,40 @@ CREATE TABLE IF NOT EXISTS `generalization` (
   KEY `FK__entity_2` (`id_child`) USING BTREE,
   CONSTRAINT `FK__entity` FOREIGN KEY (`id_parent`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK__entity_2` FOREIGN KEY (`id_child`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=157 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela main.generalization: ~25 rows (aproximadamente)
+-- Copiando dados para a tabela main.generalization: ~27 rows (aproximadamente)
 /*!40000 ALTER TABLE `generalization` DISABLE KEYS */;
 INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(128, 127, 133);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(129, 129, 133);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(132, 133, 136);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(133, 133, 137);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(134, 133, 138);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(135, 133, 139);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(138, 128, 142);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(139, 128, 143);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(140, 128, 144);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(141, 128, 145);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(142, 128, 146);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(143, 128, 147);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(144, 133, 147);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(145, 131, 152);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(146, 131, 153);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(147, 131, 154);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(148, 131, 155);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(149, 131, 156);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(150, 131, 148);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(151, 131, 149);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(152, 131, 150);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(153, 131, 151);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(154, 131, 157);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(155, 130, 133);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(156, 145, 158);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(167, 145, 176);
-INSERT INTO `generalization` (`id`, `id_parent`, `id_child`) VALUES
-	(168, 145, 177);
+	(128, 127, 133),
+	(129, 129, 133),
+	(132, 133, 136),
+	(133, 133, 137),
+	(134, 133, 138),
+	(135, 133, 139),
+	(138, 128, 142),
+	(139, 128, 143),
+	(140, 128, 144),
+	(141, 128, 145),
+	(142, 128, 146),
+	(143, 128, 147),
+	(144, 133, 147),
+	(145, 131, 152),
+	(146, 131, 153),
+	(147, 131, 154),
+	(148, 131, 155),
+	(149, 131, 156),
+	(150, 131, 148),
+	(151, 131, 149),
+	(152, 131, 150),
+	(153, 131, 151),
+	(154, 131, 157),
+	(155, 130, 133),
+	(156, 145, 158),
+	(167, 145, 176),
+	(168, 145, 177),
+	(169, 136, 178),
+	(170, 136, 179);
 /*!40000 ALTER TABLE `generalization` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela main.group
@@ -226,12 +174,9 @@ CREATE TABLE IF NOT EXISTS `group` (
 -- Copiando dados para a tabela main.group: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `group` DISABLE KEYS */;
 INSERT INTO `group` (`id`, `name`) VALUES
-	(27, 'baisic');
-INSERT INTO `group` (`id`, `name`) VALUES
-	(30, 'instructions');
-INSERT INTO `group` (`id`, `name`) VALUES
-	(31, 'data');
-INSERT INTO `group` (`id`, `name`) VALUES
+	(27, 'baisic'),
+	(30, 'instructions'),
+	(31, 'data'),
 	(32, 'operations');
 /*!40000 ALTER TABLE `group` ENABLE KEYS */;
 
@@ -245,8 +190,7 @@ CREATE TABLE IF NOT EXISTS `process` (
 -- Copiando dados para a tabela main.process: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `process` DISABLE KEYS */;
 INSERT INTO `process` (`id`, `name`) VALUES
-	(8, 'test');
-INSERT INTO `process` (`id`, `name`) VALUES
+	(8, 'test'),
 	(9, 'test2');
 /*!40000 ALTER TABLE `process` ENABLE KEYS */;
 
@@ -258,19 +202,15 @@ CREATE TABLE IF NOT EXISTS `verb` (
   PRIMARY KEY (`id`),
   KEY `FK_verb_group` (`id_group`),
   CONSTRAINT `FK_verb_group` FOREIGN KEY (`id_group`) REFERENCES `group` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela main.verb: ~5 rows (aproximadamente)
 /*!40000 ALTER TABLE `verb` DISABLE KEYS */;
 INSERT INTO `verb` (`id`, `name`, `id_group`) VALUES
-	(53, 'append parameter', 27);
-INSERT INTO `verb` (`id`, `name`, `id_group`) VALUES
-	(54, 'append block item', 27);
-INSERT INTO `verb` (`id`, `name`, `id_group`) VALUES
-	(55, 'operate', 27);
-INSERT INTO `verb` (`id`, `name`, `id_group`) VALUES
-	(56, 'call', 27);
-INSERT INTO `verb` (`id`, `name`, `id_group`) VALUES
+	(53, 'append parameter', 27),
+	(54, 'append block item', 27),
+	(55, 'operate', 27),
+	(56, 'call', 27),
 	(57, 'set name', 27);
 /*!40000 ALTER TABLE `verb` ENABLE KEYS */;
 
@@ -284,17 +224,14 @@ CREATE TABLE IF NOT EXISTS `verb_entity` (
   KEY `FK__verb` (`id_verb`) USING BTREE,
   CONSTRAINT `FK__verb` FOREIGN KEY (`id_verb`) REFERENCES `verb` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_power_entity` FOREIGN KEY (`id_entity`) REFERENCES `entity` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 
 -- Copiando dados para a tabela main.verb_entity: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `verb_entity` DISABLE KEYS */;
 INSERT INTO `verb_entity` (`id`, `id_verb`, `id_entity`) VALUES
-	(49, 53, 127);
-INSERT INTO `verb_entity` (`id`, `id_verb`, `id_entity`) VALUES
-	(50, 54, 129);
-INSERT INTO `verb_entity` (`id`, `id_verb`, `id_entity`) VALUES
-	(51, 55, 128);
-INSERT INTO `verb_entity` (`id`, `id_verb`, `id_entity`) VALUES
+	(49, 53, 127),
+	(50, 54, 129),
+	(51, 55, 128),
 	(52, 56, 128);
 /*!40000 ALTER TABLE `verb_entity` ENABLE KEYS */;
 
@@ -325,16 +262,11 @@ CREATE TABLE IF NOT EXISTS `verb_parameter` (
 -- Copiando dados para a tabela main.verb_parameter: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `verb_parameter` DISABLE KEYS */;
 INSERT INTO `verb_parameter` (`id`, `id_verb`, `id_entity`, `name`) VALUES
-	(59, 53, 128, 'parameter');
-INSERT INTO `verb_parameter` (`id`, `id_verb`, `id_entity`, `name`) VALUES
-	(60, 54, 130, 'block item');
-INSERT INTO `verb_parameter` (`id`, `id_verb`, `id_entity`, `name`) VALUES
-	(63, 55, 131, 'operation');
-INSERT INTO `verb_parameter` (`id`, `id_verb`, `id_entity`, `name`) VALUES
-	(64, 55, 128, 'a');
-INSERT INTO `verb_parameter` (`id`, `id_verb`, `id_entity`, `name`) VALUES
-	(65, 55, 128, 'b');
-INSERT INTO `verb_parameter` (`id`, `id_verb`, `id_entity`, `name`) VALUES
+	(59, 53, 128, 'parameter'),
+	(60, 54, 130, 'block item'),
+	(63, 55, 131, 'operation'),
+	(64, 55, 128, 'a'),
+	(65, 55, 128, 'b'),
 	(66, 57, NULL, 'name');
 /*!40000 ALTER TABLE `verb_parameter` ENABLE KEYS */;
 
